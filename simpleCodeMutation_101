@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct rec
+{
+	int x, y, z;
+};
+int main()
+{
+	int ctr;
+	FILE *pt;
+	struct rec my_record;
+	pt=fopen("a2z.txt", "wb");
+	if(!pt)
+	{
+		printf("Unable to read file");
+		return 1;
+	}
+	for(ctr=1; ctr<11; ctr++)
+	{
+		my_record.x=ctr;
+		fwrite(&my_record, sizeof(struct rec), 1, pt);
+	}
+	fclose(pt);
+	pt=fopen("a2z.txt", "rb");
+	if(!pt)
+	{
+		printf("Unable to read file.. again :p");
+		return 1;
+	}
+	for(ctr=1; ctr<11; ctr++)
+	{
+		fread(&my_record, sizeof(struct rec), 1, pt);
+		printf("%d\n", my_record.x);
+	}
+	fclose(pt);
+	return 0;
+}
